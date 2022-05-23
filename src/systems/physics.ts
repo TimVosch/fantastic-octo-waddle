@@ -8,8 +8,6 @@ export class PhysicsSystem extends createSystem(Position, PhysicsBody) {
       const position = world.getComponent(entity, Position)!;
       const physicsBody = world.getComponent(entity, PhysicsBody)!;
 
-      physicsBody.velocity.y += 500 * delta;
-
       position.x += physicsBody.velocity.x * delta;
       position.y += physicsBody.velocity.y * delta;
     }

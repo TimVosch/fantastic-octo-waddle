@@ -5,14 +5,21 @@ import bunny from './bunny.png';
 import { World } from './ecs';
 import { PhysicsBody } from './components/physics_body';
 import { PhysicsSystem } from './systems/physics';
+import { MovementControllable } from './components/movement_controllable';
+import { KeyboardMovementSystem } from './systems/keyboard_movement';
 
-const app = new PIXI.Application();
+const app = new PIXI.Application({
+  width: window.innerWidth,
+  height: window.innerHeight,
+  view: document.getElementById("game") as HTMLCanvasElement,
+});
 document.body.appendChild(app.view);
 
 const world = new World();
 world.addSystem(
   //
   new PhysicsSystem(),
+  new KeyboardMovementSystem(),
   new RenderSystem()
 );
 
@@ -22,8 +29,11 @@ world.createEntity(
   //
   new Position(app.screen.width / 2, app.screen.height / 2),
   new Sprite(b),
-  new PhysicsBody()
+  new PhysicsBody(),
+  new MovementControllable()
 );
+
+console.log(world.getComponent(0, PhysicsBody))
 
 start();
 function start() {
